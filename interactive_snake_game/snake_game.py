@@ -14,7 +14,7 @@ pygame.init()
 class Snake(tk.Canvas):
     def __init__(self):
         super().__init__(
-            width=600, height=620, background="green", highlightthickness=0
+            width=600, height=620, background="lemon chiffon", highlightthickness=0
         )
         self.pack(pady=50)
         self.snake_positions = [(100, 100), (80, 100), (60, 100)]
@@ -29,12 +29,12 @@ class Snake(tk.Canvas):
         # self.end =tk.Button(self, text="End").pack()
     def load_assets(self):
         try:
-            # playsound('./assets/Snake_music.mp3')
             pygame.mixer.music.load('./assets/Snake_music.mp3')
-            # pygame.mixer.music.play(-1)
-            self.snake_head_image = Image.open("./assets/head.png")
-            # self.snake_body_image = Image.open("./assets/body.png")
-            self.snake_body_image = Image.open("./assets/head.png")
+            pygame.mixer.music.set_volume(0.03)
+            pygame.mixer.music.play(-1)
+            self.snake_head_image = Image.open("./assets/head2.png")
+            self.snake_body_image = Image.open("./assets/body3.png")
+            # self.snake_body_image = Image.open("./assets/head.png")
             # self.snake_head_image = Image.open("./assets/head.png")
             self.snake_head = ImageTk.PhotoImage(self.snake_head_image)
             self.snake_body = ImageTk.PhotoImage(self.snake_body_image)
@@ -90,6 +90,7 @@ class Snake(tk.Canvas):
     def end_game(self):
         pygame.mixer.music.stop()
         pygame.mixer.music.load('./assets/gameover.mp3')
+        pygame.mixer.music.set_volume(0.03)
         pygame.mixer.music.play()
         again = tk.Button(root, text='Play Again', command=self.play_again)
         again.place(x=50, y=3)
@@ -139,44 +140,37 @@ class Snake(tk.Canvas):
 if __name__ == '__main__':
     root = tk.Tk()
     root.title("Snake")
-    # root.state('zoomed')
-    root.geometry("800x720")  # Width x Height
-    # bk_image = Image.open('./assets/bk3.jpg')
-    #
-    # bk_image = bk_image.resize((800,720),Image.ANTIALIAS)
-    # resized1 = ImageTk.PhotoImage(bk_image)
-    # backgroundLabel = tk.Label(root,image=resized1)
-    # backgroundLabel.place(x=0,y=0)
-
+    root.geometry("980x720")  # Width x Height
+    
+    bk_image = Image.open('./assets/bk3.jpg')
+    bk_image = bk_image.resize((980,720),Image.ANTIALIAS)
+    resized1 = ImageTk.PhotoImage(bk_image)
+    backgroundLabel = tk.Label(root,image=resized1)
+    backgroundLabel.place(x=0,y=0)
     root.resizable(False, False)
     root.tk.call("tk", "scaling", 4.0)
     def clear():
         root.destroy()
     def play():
-        # root.delete(tk.ALL)
-        # bk_image = Image.open('./assets/bk4.jpg')
-        # bk_image = bk_image.resize((700, 720), Image.ANTIALIAS)
-        # resized1 = ImageTk.PhotoImage(bk_image)
-        # backgroundLabel = tk.Label(root, image=resized1)
-        # backgroundLabel.place(x=0, y=0)
-        # mybtn.place(x=0, y=0)
-        my_label.destroy()
-        button_start.destroy()
+        mybtn.place(x=0, y=0)
+        mybtn.destroy()
         mybtn2 = tk.Button(root, text='Quit Game', command=clear)
         mybtn2.place(x=50, y=3)
         board = Snake()
 
 
-    bg_image = ImageTk.PhotoImage(file=r"./assets/edit_snake.png")
-    tk.Label(root, image=bg_image).place(relwidth=1, relheight=1)
-    # global mylabel
-    my_label = tk.Label(root, text='Interactive snake game', width=20, height=1, bg='#E1F6FF',
-                        font="Times 20 bold")
 
-    my_label.place(x=175, y=25)
-    button_start = tk.Button(root, text="start new game", command=play, bg='green', padx=40, pady=10,
-                             font="Times 16 bold", borderwidth=2)
-    button_start.place(x=200, y=150)
-    # mybtn = tk.Button(root, text='play', command=play)
-    # mybtn.place(x=300,y=400)
+    mybtn = tk.Button(root, text='play', command=play)
+    mybtn.place(x=300,y=400)
+
+
+    # bg_image = ImageTk.PhotoImage(file=r"./assets/edit_snake.png")
+    # tk.Label(root, image=bg_image).place(relwidth=1, relheight=1)
+    # my_label = tk.Label(root, text='Interactive snake game', width=20, height=1, bg='#E1F6FF',
+    #                     font="Times 20 bold")
+
+    # my_label.place(x=175, y=25)
+    # button_start = tk.Button(root, text="start new game", command=play, bg='green', padx=40, pady=10,
+    #                          font="Times 16 bold", borderwidth=2)
+    # button_start.place(x=200, y=150)
     root.mainloop()

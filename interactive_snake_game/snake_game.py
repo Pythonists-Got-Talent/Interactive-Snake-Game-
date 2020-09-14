@@ -86,6 +86,7 @@ class Snake(tk.Canvas):
             # pygame.mixer.music.load('./assets/Snake_music.mp3')
             # pygame.mixer.music.play(-1)
     def play_again(self):
+        self.destroy()
         self.__init__()
     def end_game(self):
         pygame.mixer.music.stop()
@@ -99,7 +100,7 @@ class Snake(tk.Canvas):
             self.winfo_width() / 2,
             self.winfo_height() / 2,
             text=f"Game over! You scored {self.score}!",
-            fill="#fff",
+            fill="#000",
             font=("", 14)
         )
     def move_snake(self):

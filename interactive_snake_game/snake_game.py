@@ -1,3 +1,8 @@
+"""
+This file is for the snake game using tkinter library
+"""
+
+# the libraries we need
 import tkinter as tk
 from random import randint
 from PIL import Image, ImageTk
@@ -16,6 +21,9 @@ pygame.init()
 
 # time.sleep(10)
 class Snake(tk.Canvas):
+    """
+    Class to represent the snake game contains all of the methods we need to play the game.
+    """
     def __init__(self):
         super().__init__(
             width=600, height=620, background="lemon chiffon", highlightthickness=0
@@ -34,6 +42,9 @@ class Snake(tk.Canvas):
         # self.end =tk.Button(self, text="End").pack()
 
     def load_assets(self):
+        """
+        Method to upload all the pictures and sounds we used in the game.
+        """
         try:
             global bk_song
             global last_song
@@ -55,6 +66,9 @@ class Snake(tk.Canvas):
             root.destroy()
 
     def create_objects(self):
+        """
+        Method to creat the Snake in the game plase.
+        """
         self.create_text(
             35, 12, text=f"Score: {self.score}", tag="score", fill="green", font=(10)
         )
@@ -73,6 +87,9 @@ class Snake(tk.Canvas):
         self.create_rectangle(7, 27, 593, 613, outline="#525d69")
 
     def check_collisions(self):
+        """
+        Method to ensure the head of the snake not crashed with the snake body. 
+        """
         head_x_position, head_y_position = self.snake_positions[0]
         return (
                 head_x_position in (0, 600)
@@ -81,6 +98,9 @@ class Snake(tk.Canvas):
         )
 
     def check_food_collision(self):
+        """
+        Method to add the food of the snake and ensure its not in the snake body positions.
+        """
         if self.snake_positions[0] == self.food_position:
             # pygame.mixer.music.stop()
             eat = pygame.mixer.Sound('./assets/apple.wav')
@@ -98,13 +118,18 @@ class Snake(tk.Canvas):
 
 
     def play_again(self):
-
+        """
+        Method to run the game again.
+        """
         self.destroy()
         # print(num)
         pygame.mixer.music.load(last_song)
         self.__init__()
 
     def end_game(self):
+        """
+        Method to end the game when the snake eat it self or when the snake crushed on the wall.
+        """
         pygame.mixer.music.stop()
         pygame.mixer.music.load('./assets/gameover.mp3')
         pygame.mixer.music.set_volume(0.03)
@@ -131,6 +156,9 @@ class Snake(tk.Canvas):
         )
 
     def move_snake(self):
+        """
+        Method to move the snake.
+        """
         head_x_position, head_y_position = self.snake_positions[0]
         if self.direction == "Left":
             new_head_position = (head_x_position - MOVE_INCREMENT, head_y_position)
@@ -145,6 +173,9 @@ class Snake(tk.Canvas):
             self.coords(segment, position)
 
     def on_key_press(self, e):
+        """
+        Method to avoid taking the opposite direction.
+        """
         new_direction = e.keysym
         all_directions = ("Up", "Down", "Left", "Right")
         opposites = ({"Up", "Down"}, {"Left", "Right"})
@@ -155,6 +186,9 @@ class Snake(tk.Canvas):
             self.direction = new_direction
 
     def perform_actions(self):
+        """
+        Method to run the functionality of the game.
+        """
         if self.check_collisions():
             self.end_game()
         self.check_food_collision()
@@ -162,6 +196,9 @@ class Snake(tk.Canvas):
         self.after(GAME_SPEED, self.perform_actions)
 
     def set_new_food_position(self):
+        """
+        Method to put the food in a random location.
+        """
         while True:
             x_position = randint(1, 29) * MOVE_INCREMENT
             y_position = randint(3, 30) * MOVE_INCREMENT
@@ -186,9 +223,15 @@ if __name__ == '__main__':
 
 
     def clear():
+        """
+        Method to close the game.
+        """
         root.destroy()
 
     def level():
+        """
+        Method to choose the speed of the snake from the user
+        """
         global easy
         global meduim
         global hard
@@ -209,6 +252,9 @@ if __name__ == '__main__':
 
 
     def play():
+        """
+        Method to run the game.
+        """
         level()
         ck_easy.destroy()
         ck_meduim.destroy()

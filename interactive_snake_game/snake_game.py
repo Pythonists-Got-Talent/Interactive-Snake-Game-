@@ -5,13 +5,14 @@ from PIL import Image, ImageTk
 import pygame
 from pygame import mixer
 import time
+from tkinter import ttk
 
 # from directions import *
 MOVE_INCREMENT = 20
 MOVES_PER_SECOND = 15
 GAME_SPEED = 3000 // MOVES_PER_SECOND
 pygame.init()
-
+# bk_song = pygame.mixer.music.load('./assets/Snake_music.mp3')
 
 # time.sleep(10)
 class Snake(tk.Canvas):
@@ -19,6 +20,7 @@ class Snake(tk.Canvas):
         super().__init__(
             width=600, height=620, background="lemon chiffon", highlightthickness=0
         )
+
         self.pack(pady=50)
         self.snake_positions = [(100, 100), (80, 100), (60, 100)]
         self.food_position = self.set_new_food_position()
@@ -33,13 +35,17 @@ class Snake(tk.Canvas):
 
     def load_assets(self):
         try:
-            pygame.mixer.music.load('./assets/Snake_music.mp3')
-            pygame.mixer.music.set_volume(0.03)
+            global bk_song
+            global last_song
+            # song_bk = bk_song
+            # song_bk
+            pygame.mixer.music.load(last_song)
+            pygame.mixer.music.set_volume(0.02)
             pygame.mixer.music.play(-1)
+
             self.snake_head_image = Image.open("./assets/head2.png")
             self.snake_body_image = Image.open("./assets/body3.png")
-            # self.snake_body_image = Image.open("./assets/head.png")
-            # self.snake_head_image = Image.open("./assets/head.png")
+
             self.snake_head = ImageTk.PhotoImage(self.snake_head_image)
             self.snake_body = ImageTk.PhotoImage(self.snake_body_image)
             self.food_image = Image.open("./assets/apple.png")
@@ -89,12 +95,13 @@ class Snake(tk.Canvas):
             self.coords(self.find_withtag("food"), *self.food_position)
             score = self.find_withtag("score")
             self.itemconfigure(score, text=f"Score: {self.score}", tag="score")
-            # pygame.mixer.music.queue('./assets/Snake_music.mp3')
-            # pygame.mixer.music.load('./assets/Snake_music.mp3')
-            # pygame.mixer.music.play(-1)
+
 
     def play_again(self):
+
         self.destroy()
+        # print(num)
+        pygame.mixer.music.load(last_song)
         self.__init__()
 
     def end_game(self):
@@ -102,6 +109,7 @@ class Snake(tk.Canvas):
         pygame.mixer.music.load('./assets/gameover.mp3')
         pygame.mixer.music.set_volume(0.03)
         pygame.mixer.music.play()
+
         again = tk.Button(root, text='Play Again', command=self.play_again, font="Times 10 bold", bg="green")
         again.place(x=380, y=400)
         mybtn2 = tk.Button(root, text='Quit Game', command=clear, bg="red", font="Times 10 bold")
@@ -174,13 +182,45 @@ if __name__ == '__main__':
     backgroundLabel.place(x=0, y=0)
     root.resizable(False, False)
     root.tk.call("tk", "scaling", 4.0)
+    last_song='./assets/'
 
 
     def clear():
         root.destroy()
 
+    def level():
+        global easy
+        global meduim
+        global hard
+        global GAME_SPEED
+        global MOVES_PER_SECOND
+        if easy.get():
+            GAME_SPEED = 3000 // MOVES_PER_SECOND
+        if meduim.get():
+            GAME_SPEED = 2000 // MOVES_PER_SECOND
+
+        if hard.get():
+            GAME_SPEED = 1000 // MOVES_PER_SECOND
+        if extreme.get():
+            GAME_SPEED = 400 // MOVES_PER_SECOND
+
+
+
+
 
     def play():
+        level()
+        ck_easy.destroy()
+        ck_meduim.destroy()
+        ck_hard.destroy()
+        ck_extreme.destroy()
+        global last_song
+
+        global bk_song
+        last_song += comboExample.get() +'.mp3'
+        labelTop.destroy()
+        comboExample.destroy()
+
         mybtn.place(x=0, y=0)
         mybtn.destroy()
         board = Snake()
@@ -191,13 +231,73 @@ if __name__ == '__main__':
     mybtn = tk.Button(root, text='Start', command=play, bg='#D2B48C', font="Times 10 bold", fg='green', padx=50, pady=0)
     mybtn.place(x=400, y=400)
 
-    # bg_image = ImageTk.PhotoImage(file=r"./assets/edit_snake.png")
-    # tk.Label(root, image=bg_image).place(relwidth=1, relheight=1)
-    # my_label = tk.Label(root, text='Interactive snake game', width=20, height=1, bg='#E1F6FF',
-    #                     font="Times 20 bold")
 
-    # my_label.place(x=175, y=25)
-    # button_start = tk.Button(root, text="start new game", command=play, bg='green', padx=40, pady=10,
-    #                          font="Times 16 bold", borderwidth=2)
-    # button_start.place(x=200, y=150)
+    # pygame.mixer.music.load('./assets/hakona_start.mp3')
+    # pygame.mixer.music.set_volume(0.2)
+    # pygame.mixer.music.play()
+
+    pygame.mixer.Sound('./assets/hakona_start2.wav').play()
+
+    # pygame.mixer.music.load('./assets/jungle.mp3')
+    # pygame.mixer.music.set_volume(0.01)
+    # pygame.mixer.music.play()
+
+    # pygame.mixer.music.load('./assets/merged.mp3')
+    # pygame.mixer.music.set_volume(0.01)
+    # pygame.mixer.music.play()
+
+
+    def callBackFunc(var):
+        var.set(True)
+
+    # Choose Level
+    easy = tk.BooleanVar()
+    easy.set(False)
+    ck_easy = tk.Checkbutton(root, text="Easy", variable=easy,command=callBackFunc(easy))
+    ck_easy.place(x=400,y=500)
+    ck_easy.deselect()
+
+
+
+    meduim = tk.BooleanVar()
+    meduim.set(False)
+    ck_meduim = tk.Checkbutton(root, text="Meduim", variable=meduim,command=callBackFunc(meduim))
+    ck_meduim.place(x=500,y=500)
+    ck_meduim.deselect()
+
+
+    hard = tk.BooleanVar()
+    hard.set(False)
+    ck_hard = tk.Checkbutton(root, text="Hard", variable=hard,command=callBackFunc(hard))
+    ck_hard.place(x=600,y=500)
+    ck_hard.deselect()
+
+    extreme = tk.BooleanVar()
+    extreme.set(False)
+    ck_extreme = tk.Checkbutton(root, text="Extreme, for people with strong hearts only!", variable=extreme,command=callBackFunc(extreme))
+    ck_extreme.place(x=400,y=530)
+    ck_extreme.deselect()
+
+    # Choose Song
+    fontExample = ("Courier", 5, "normal")
+
+    labelTop = tk.Label(root,
+                        text="Choose your song",
+                        font = fontExample)
+    labelTop.place(x=400,y=570)
+
+    comboExample = ttk.Combobox(root,
+                                values=[
+                                    "Basic Snake Music",
+                                    "Hakona Matata",
+                                    "In the jungle",
+                                    "Dance Monkey",
+                                    "Havana",
+                                    "Crazy Frog"],
+                                font = fontExample)
+    comboExample.current(0)
+    root.option_add('*TCombobox*Listbox.font', fontExample)
+
+    comboExample.place(x=400,y=600)
+
     root.mainloop()

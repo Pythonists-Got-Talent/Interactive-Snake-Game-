@@ -33,6 +33,12 @@ Bringing back the glory of the old and popular arcade game Snake by transforming
 However, the vission is to develop a model that can control and change some functionalities on the screen according to external or outsider influence, although the model is applied to a simple logic based game, the basic concept is to be able to read hand gestures from the web cam, thus it can be evolved to bigger and more complex applications like controlling a video or offering useful tools to people with disabilities to the point where they can use thier computers without the need of assistance.
 
 Add screenshots
+
+<video controls="controls">
+  <source type="video/mp4" src="assets/game_video.mp4"></source>
+  <!-- <source type="video/webm" src="assets/game_video.mp4"></source> -->
+  <!-- <p>Your browser does not support the video element.</p> -->
+</video>
 ____________
 
 <a name="tech"></a>
@@ -70,8 +76,8 @@ Install the libraries using: pip install -r installation.txt in your terminal.
 1. Clone the repository in your local computer.
 2. Use python < filename.py > to run specific files, two files are needed to run the program:
 
-    python detecting_directions.py
-    python snake_game.py
+        python detecting_directions.py
+        python snake_game.py
 
 
 

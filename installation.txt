@@ -1,0 +1,7 @@
+numpy==1.19.1
+imutils==0.5.3
+PyAutoGUI==0.9.50
+opencv-python==4.4.0.42
+opencv-contrib-python==4.4.0.42
+pygame==1.9.6
+future==0.18.2

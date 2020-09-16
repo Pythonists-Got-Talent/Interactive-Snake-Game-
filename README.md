@@ -34,7 +34,7 @@ However, the vision is to develop a model that can control and change some funct
 
 ![img](assets/documentation.PNG)
 
-Check out the full demo [here](https://youtu.be/vC_WkbWj_48)
+## Check out the full demo [here](https://youtu.be/vC_WkbWj_48)
 
 ____________
 

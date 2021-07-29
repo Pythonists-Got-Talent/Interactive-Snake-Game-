@@ -17,7 +17,7 @@ ______
 
 ## Table Of Contents
 
-* [Describtion](#desc)
+* [Description](#desc)
 * [Technologies](#tech)
 * [Getting Started](#start)
 
